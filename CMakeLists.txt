@@ -31,7 +31,7 @@ set(CMAKE_MSVC_RUNTIME_LIBRARY "MultiThreaded$<$<CONFIG:Debug>:Debug>" CACHE STR
 # ---- Project ----
 
 project(
-	TemplatePluginSSE
+	CameraTest
 	VERSION 1.0.0
 	LANGUAGES CXX
 )
@@ -81,6 +81,7 @@ else ()
 endif ()
 
 find_package(spdlog REQUIRED CONFIG)
+find_package(imgui REQUIRED CONFIG)
 
 # ---- Add source files ----
 
@@ -133,6 +134,7 @@ target_link_libraries(
 	PRIVATE
 		CommonLibSSE::CommonLibSSE
 		spdlog::spdlog
+		imgui::imgui
 )
 
 if (DEFINED UseUselessUtils AND UseUselessUtils)
@@ -201,4 +203,10 @@ target_precompile_headers(
 	${PROJECT_NAME}
 	PRIVATE
 		src/PCH.h
+)
+
+add_custom_command(
+	TARGET ${PROJECT_NAME} POST_BUILD
+	COMMAND ${CMAKE_COMMAND} -E copy_if_different $<TARGET_FILE:${PROJECT_NAME}> "e:/MO2_Data/mods/xTESEdit64_OUT/skse/plugins/"
+	COMMAND ${CMAKE_COMMAND} -E copy_if_different $<TARGET_PDB_FILE:${PROJECT_NAME}> "e:/MO2_Data/mods/xTESEdit64_OUT/skse/plugins/"
 )

@@ -1,6 +1,6 @@
 #pragma once
 
-#define DEBUG
+//#define DEBUG
 
 #include "RE/Skyrim.h"
 #include "SKSE/SKSE.h"
